@@ -1,0 +1,66 @@
+# Python
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environment
+
+venv/
+.env/
+.env.*
+
+# Environment variables
+
+.env
+*.env
+
+# Logs
+
+*.log
+
+# Build / Distribution
+
+build/
+dist/
+*.egg-info/
+
+# Testing
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE / Editor
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Secrets
+
+*.key
+*.pem
+
+# SQLite database
+
+*.db
+*.sqlite3
+
+# MCP / local config
+
+config.json
+claude_desktop_config.json
+
+# Misc
+
+*.bak
+*.tmp
