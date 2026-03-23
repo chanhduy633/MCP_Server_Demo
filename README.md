@@ -15,7 +15,7 @@ mcp_demo/
 │   ├── sql
 │   │   │
 │   │   ├── app/
-│   │   │   └── server.py          # MCP server (SQLite)
+│   │   │   └── tools.py 
 │   │   │
 │   │   ├── domain/
 │   │   │   └── user_service.py
@@ -29,7 +29,7 @@ mcp_demo/
 │   └── github
 │       │
 │       ├── app/
-│       │   └── server.py          # MCP server (GitHub)
+│       │   └── tools.py 
 │       │
 │       ├── domain/
 │       │   └── github_service.py
@@ -40,8 +40,7 @@ mcp_demo/
 │       └── models/
 │          └── models.py
 │
-├── main_sqlite.py        # entry SQLite MCP
-├── main_github.py        # entry GitHub MCP
+├── main.py
 │
 ├── pyproject.toml
 └── README.md
@@ -55,7 +54,12 @@ pip install -e .
 setx GITHUB_TOKEN "your_token"
 
 # Kết nối Claude Desktop
+<<<<<<< HEAD
 "mcpServers": {
+=======
+{
+  "mcpServers": {
+>>>>>>> 4e461e2 (update readme.md)
     "demo": {
       "command": "npx",
       "args": [
