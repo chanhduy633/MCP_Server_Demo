@@ -1,14 +1,16 @@
 # MCP Demo Project
-#Giới thiệu
 
-Project demo Model Context Protocol (MCP) kết nối AI với:
-    SQLite
-    GitHub
+## Giới thiệu
+Project demo **Model Context Protocol (MCP)** kết nối AI với:
+- SQLite
+- GitHub
+
+---
 
 # Cấu trúc dự án
+```text
 mcp_demo/
 │
-
 │
 │   ├── sql
 │   │   │
