@@ -55,18 +55,12 @@ pip install -e .
 setx GITHUB_TOKEN "your_token"
 
 # Kết nối Claude Desktop
-{
-  "mcpServers": {
-    "github": {
-      "command": "python",
-      "args": ["main_github.py"],
-      "env": {
-        "GITHUB_TOKEN": "your_token"
-      }
-    },
-    "sqlite": {
-      "command": "python",
-      "args": ["main_sqlite.py"]
+"mcpServers": {
+    "demo": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "http://127.0.0.1:8000/mcp"
+      ]
     }
   }
-}
