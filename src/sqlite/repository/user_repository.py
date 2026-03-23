@@ -1,7 +1,8 @@
 from src.sqlite.db.database import get_connection
 from src.sqlite.models.user import User
+from src.sqlite.interfaces.i_user_repository import IUserRepository
 
-class UserRepository:
+class UserRepository(IUserRepository):
 
     def get_all_users(self):
         conn = get_connection()

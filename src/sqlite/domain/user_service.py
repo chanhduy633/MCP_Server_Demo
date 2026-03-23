@@ -1,8 +1,8 @@
-from src.sqlite.repository.user_repository import UserRepository
+from src.sqlite.interfaces.i_user_repository import IUserRepository
 
 class UserService:
-    def __init__(self):
-        self.repo = UserRepository()
+    def __init__(self, repo: IUserRepository):
+        self.repo = repo
 
     def list_users(self):
         users = self.repo.get_all_users()

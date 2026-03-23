@@ -1,5 +1,5 @@
 from typing import Optional
-from src.github.repository.github_repository import GithubRepository
+from src.github.interfaces.i_github_repository import IGithubRepository
 
 
 class GithubService:
@@ -8,8 +8,8 @@ class GithubService:
     Nhận dữ liệu từ Repository, xử lý rồi trả về dict sạch cho App layer.
     """
 
-    def __init__(self):
-        self.repo = GithubRepository()
+    def __init__(self, repo: IGithubRepository):
+        self.repo = repo
 
     # ── Repositories ─────────────────────────────────────────────────────────
 

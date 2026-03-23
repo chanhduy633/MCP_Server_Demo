@@ -2,14 +2,14 @@ import os
 import requests
 from typing import Optional
 from src.github.models.models import Repository, Issue, PullRequest
-
+from src.github.interfaces.i_github_repository import IGithubRepository
 
 GITHUB_API = "https://api.github.com"
 
 
-class GithubRepository:
+class GithubRepository(IGithubRepository):
     """
-    Repository layer: chỉ làm việc với GitHub REST API.
+    Repository layer: implement IGithubRepository, gọi GitHub REST API.
     Không chứa business logic — chỉ gọi API và map response về model.
     """
 

@@ -1,9 +1,10 @@
 # src/sqlite/app/tools.py
 from mcp.server.fastmcp import FastMCP
 from src.sqlite.domain.user_service import UserService
+from src.sqlite.repository.user_repository import UserRepository
 
 def register(mcp: FastMCP):
-    service = UserService()
+    service = UserService(repo=UserRepository())
 
     @mcp.tool()
     def get_users() -> list[dict]:

@@ -1,9 +1,10 @@
 # src/github/app/tools.py
 from mcp.server.fastmcp import FastMCP
 from src.github.domain.github_service import GithubService
+from src.github.repository.github_repository import GithubRepository
 
 def register(mcp: FastMCP):
-    service = GithubService()
+    service = GithubService(repo=GithubRepository())
 
     @mcp.tool()
     def search_repositories(query: str, per_page: int = 10) -> list[dict]:
