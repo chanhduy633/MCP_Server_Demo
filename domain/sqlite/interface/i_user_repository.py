@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from src.sqlite.models.user import User
-
+from domain.sqlite.model.user import User
 
 class IUserRepository(ABC):
     """

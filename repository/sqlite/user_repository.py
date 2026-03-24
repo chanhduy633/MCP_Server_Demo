@@ -1,6 +1,6 @@
-from src.sqlite.db.database import get_connection
-from src.sqlite.models.user import User
-from src.sqlite.interfaces.i_user_repository import IUserRepository
+from shared.db.database import get_connection
+from domain.sqlite.model.user import User
+from domain.sqlite.interface.i_user_repository import IUserRepository
 
 class UserRepository(IUserRepository):
 

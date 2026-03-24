@@ -1,8 +1,8 @@
 # main.py
 from mcp.server.fastmcp import FastMCP
-from src.sqlite.db.database import init_db
-from src.sqlite.app import tools as sqlite_tools
-from src.github.app import tools as github_tools
+from shared.db.database import init_db
+from app.mcp_sqlite import tools as sqlite_tools
+from app.mcp_github import tools as github_tools
 
 mcp = FastMCP("MCP Demo Server")
 

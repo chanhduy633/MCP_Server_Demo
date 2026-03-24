@@ -1,8 +1,8 @@
 import os
 import requests
 from typing import Optional
-from src.github.models.models import Repository, Issue, PullRequest
-from src.github.interfaces.i_github_repository import IGithubRepository
+from domain.github.model.models import Repository, Issue, PullRequest
+from domain.github.interface.i_github_repository import IGithubRepository
 
 GITHUB_API = "https://api.github.com"
 

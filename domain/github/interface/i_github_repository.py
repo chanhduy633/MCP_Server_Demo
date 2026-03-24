@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional
-from src.github.models.models import Repository, Issue, PullRequest
+from domain.github.model.models import Repository, Issue, PullRequest
 
 
 class IGithubRepository(ABC):
