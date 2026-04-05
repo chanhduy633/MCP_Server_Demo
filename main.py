@@ -39,7 +39,6 @@ mcp = FastMCP(
 
 sqlite_tools.register(mcp)
 github_tools.register(mcp)
-init_db()
 
 
 @contextlib.asynccontextmanager
@@ -58,4 +57,5 @@ app = Starlette(
 # Chạy local
 if __name__ == "__main__":
     import uvicorn
+    init_db()
     uvicorn.run(app, host="0.0.0.0", port=8000)
