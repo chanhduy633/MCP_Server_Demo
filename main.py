@@ -1,6 +1,11 @@
+import contextlib
+import os
+
 from mcp.server.fastmcp import FastMCP
 from mcp.server.auth.settings import AuthSettings
 from pydantic import AnyHttpUrl
+from starlette.applications import Starlette
+from starlette.routing import Mount
 from dotenv import load_dotenv
 
 from shared.db.database import init_db
@@ -8,11 +13,8 @@ from shared.auth import create_auth0_verifier
 from app.mcp_sqlite import tools as sqlite_tools
 from app.mcp_github import tools as github_tools
 
-import os
-
 load_dotenv()
 
-# Validate required env vars early
 auth0_domain = os.getenv("AUTH0_DOMAIN")
 resource_server_url = os.getenv("RESOURCE_SERVER_URL")
 
@@ -21,12 +23,12 @@ if not auth0_domain:
 if not resource_server_url:
     raise ValueError("RESOURCE_SERVER_URL environment variable is required")
 
-# Initialize Auth0 token verifier
 token_verifier = create_auth0_verifier()
 
 mcp = FastMCP(
     "MCP Demo Server",
-    host="0.0.0.0",
+    stateless_http=True,   # ← Vercel không có persistent memory
+    json_response=True,    # ← Vercel không support SSE streaming
     token_verifier=token_verifier,
     auth=AuthSettings(
         issuer_url=AnyHttpUrl(f"https://{auth0_domain}/"),
@@ -37,7 +39,23 @@ mcp = FastMCP(
 
 sqlite_tools.register(mcp)
 github_tools.register(mcp)
+init_db()
 
+
+@contextlib.asynccontextmanager
+async def lifespan(app: Starlette):
+    async with mcp.session_manager.run():
+        yield
+
+
+# Vercel đọc biến `app` này ở module level khi import
+app = Starlette(
+    routes=[Mount("/", app=mcp.streamable_http_app())],
+    lifespan=lifespan,
+)
+
+
+# Chạy local
 if __name__ == "__main__":
-    init_db()
-    mcp.run(transport="streamable-http")
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
