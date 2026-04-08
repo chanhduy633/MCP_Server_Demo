@@ -35,8 +35,7 @@ mcp = FastMCP(
         resource_server_url=AnyHttpUrl(resource_server_url),
         required_scopes=["openid", "profile", "email"],
     ),
-    # ✅ Fix: cho phép host của Vercel
-    host="mcp-server-demo-nine.vercel.app",
+    host=os.getenv("MCP_HOST", "localhost"),
 )
 
 sqlite_tools.register(mcp)
@@ -52,7 +51,6 @@ async def lifespan(app: Starlette):
 app = Starlette(
     routes=[Mount("/", app=mcp.streamable_http_app())],
     lifespan=lifespan,
-    # ✅ Bỏ TrustedHostMiddleware — không cần thiết và có thể gây conflict
 )
 
 if __name__ == "__main__":
