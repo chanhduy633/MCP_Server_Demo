@@ -6,6 +6,8 @@ from mcp.server.auth.settings import AuthSettings
 from pydantic import AnyHttpUrl
 from starlette.applications import Starlette
 from starlette.routing import Mount
+from starlette.middleware import Middleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware  # ← thêm
 from dotenv import load_dotenv
 
 from shared.db.database import init_db
@@ -27,8 +29,8 @@ token_verifier = create_auth0_verifier()
 
 mcp = FastMCP(
     "MCP Demo Server",
-    stateless_http=True,   # ← Vercel không có persistent memory
-    json_response=True,    # ← Vercel không support SSE streaming
+    stateless_http=True,
+    json_response=True,
     token_verifier=token_verifier,
     auth=AuthSettings(
         issuer_url=AnyHttpUrl(f"https://{auth0_domain}/"),
@@ -47,14 +49,22 @@ async def lifespan(app: Starlette):
         yield
 
 
-# Vercel đọc biến `app` này ở module level khi import
 app = Starlette(
     routes=[Mount("/", app=mcp.streamable_http_app())],
     lifespan=lifespan,
+    middleware=[                                          # ← thêm block này
+        Middleware(
+            TrustedHostMiddleware,
+            allowed_hosts=[
+                "mcp-server-demo-nine.vercel.app",
+                "localhost",
+                "127.0.0.1",
+                "*",  # hoặc dùng wildcard cho đơn giản
+            ]
+        )
+    ],
 )
 
-
-# Chạy local
 if __name__ == "__main__":
     import uvicorn
     init_db()
