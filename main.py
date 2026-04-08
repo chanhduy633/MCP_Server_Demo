@@ -6,8 +6,6 @@ from mcp.server.auth.settings import AuthSettings
 from pydantic import AnyHttpUrl
 from starlette.applications import Starlette
 from starlette.routing import Mount
-from starlette.middleware import Middleware
-from starlette.middleware.trustedhost import TrustedHostMiddleware  # ← thêm
 from dotenv import load_dotenv
 
 from shared.db.database import init_db
@@ -37,6 +35,8 @@ mcp = FastMCP(
         resource_server_url=AnyHttpUrl(resource_server_url),
         required_scopes=["openid", "profile", "email"],
     ),
+    # ✅ Fix: cho phép host của Vercel
+    host="mcp-server-demo-nine.vercel.app",
 )
 
 sqlite_tools.register(mcp)
@@ -52,17 +52,7 @@ async def lifespan(app: Starlette):
 app = Starlette(
     routes=[Mount("/", app=mcp.streamable_http_app())],
     lifespan=lifespan,
-    middleware=[                                          # ← thêm block này
-        Middleware(
-            TrustedHostMiddleware,
-            allowed_hosts=[
-                "mcp-server-demo-nine.vercel.app",
-                "localhost",
-                "127.0.0.1",
-                "*",  # hoặc dùng wildcard cho đơn giản
-            ]
-        )
-    ],
+    # ✅ Bỏ TrustedHostMiddleware — không cần thiết và có thể gây conflict
 )
 
 if __name__ == "__main__":
